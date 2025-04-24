@@ -24,14 +24,14 @@ public class Ass {
             }
         }
 
-        // 🚀 Scatter the array to all processes
+        //  Scatter the array to all processes
         MPI.COMM_WORLD.Scatter(
             sendbuffer, 0, unitsize, MPI.INT,
             receivebuffer, 0, unitsize, MPI.INT,
             root
         );
 
-        // 💡 Calculate sum of chunk in each process
+        // Calculate sum of chunk in each process
         int localSum = 0;
         for (int i = 0; i < unitsize; i++) {
             localSum += receivebuffer[i];
@@ -39,14 +39,14 @@ public class Ass {
 
         System.out.println("Intermediate sum at process " + rank + " is " + localSum);
 
-        // 🧩 Gather partial sums from all processes to root
+        // Gather partial sums from all processes to root
         MPI.COMM_WORLD.Gather(
             new int[]{localSum}, 0, 1, MPI.INT,
             partialSum, 0, 1, MPI.INT,
             root
         );
 
-        // ✅ Final aggregation at root
+        //  Final aggregation at root
         if (rank == root) {
             int totalSum = 0;
             for (int i = 0; i < size; i++) {
