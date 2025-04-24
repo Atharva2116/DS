@@ -9,7 +9,7 @@ public class Ass {
         int unitsize = 5;
         int root = 0;
 
-        // 🛠️ Allocate sendbuffer for all processes to avoid NullPointerException
+        // Allocate sendbuffer for all processes to avoid NullPointerException
         int[] sendbuffer = new int[unitsize * size]; 
         int[] receivebuffer = new int[unitsize];
         int[] partialSum = new int[size];
