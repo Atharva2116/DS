@@ -40,42 +40,42 @@ public class Bully {
         }
     }
 
-    public static void startElection(int id) {
-        if (!processes[id - 1]) {
-            System.out.println("P" + id + " is DOWN. Cannot start election.");
-            return;
-        }
+   public static void startElection(int id) {
+    if (!processes[id - 1]) {
+        System.out.println("P" + id + " is DOWN. Cannot start election.");
+        return;
+    }
 
-        System.out.println("P" + id + " started an election.");
+    System.out.println("P" + id + " started an election.");
 
-        boolean higherResponded = false;
+    boolean higherProcessExists = false;
 
-        for (int i = id; i < n; i++) {
-            if (processes[i]) {
-                System.out.println("P" + id + " sends ELECTION message to P" + (i + 1));
-                System.out.println("P" + (i + 1) + " responds with OK to P" + id);
-                higherResponded = true;
-            }
-        }
-
-        if (!higherResponded) {
-            coordinator = id;
-            System.out.println("P" + id + " becomes the coordinator.");
-            for (int i = 0; i < n; i++) {
-                if (i != (id - 1) && processes[i]) {
-                    System.out.println("P" + id + " sends COORDINATOR message to P" + (i + 1));
-                }
-            }
-        } else {
-            // simulate higher process continuing the election
-            for (int i = n - 1; i >= id; i--) {
-                if (processes[i]) {
-                    startElection(i + 1);
-                    break;
-                }
-            }
+    // Send election messages to all higher processes
+    for (int i = id; i < n; i++) {
+        if (processes[i]) {
+            System.out.println("P" + id + " sends ELECTION message to P" + (i + 1));
+            higherProcessExists = true;
+            // Higher process responds with OK
+            System.out.println("P" + (i + 1) + " responds with OK to P" + id);
         }
     }
+
+    // If no higher process exists, this process becomes the coordinator
+    if (!higherProcessExists) {
+        coordinator = id;
+        System.out.println("P" + id + " becomes the coordinator.");
+        
+        // Announce to all other processes
+        for (int i = 0; i < n; i++) {
+            if ((i + 1) != id && processes[i]) {
+                System.out.println("P" + id + " sends COORDINATOR message to P" + (i + 1));
+            }
+        }
+    } else {
+        // Higher processes will start their own elections
+        System.out.println("P" + id + " waits for coordinator announcement.");
+    }
+}
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
