@@ -1,0 +1,27 @@
+🛠️ How to Run
+💻 Compile the IDL
+bash
+Copy
+Edit
+idlj -fall UppercaseModule.idl
+🧱 Compile all Java files
+bash
+Copy
+Edit
+javac UppercaseModule/*.java UppercaseImpl.java UppercaseServer.java UppercaseClient.java
+⚙️ Run the CORBA Naming Service
+bash
+Copy
+Edit
+tnameserv -ORBInitialPort 1050
+▶️ Run the Server
+bash
+Copy
+Edit
+java UppercaseServer -ORBInitialPort 1050
+🧪 Run the Client
+bash
+Copy
+Edit
+java UppercaseClient -ORBInitialPort 1050
+✅ Expected Output

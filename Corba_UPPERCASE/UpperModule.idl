@@ -1,0 +1,5 @@
+module UppercaseModule{
+    interface Uppercase{
+        string to_uppercase(in string str);
+    };
+};
